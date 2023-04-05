@@ -58,6 +58,7 @@ def login():
 
 @app.route("/signin", methods = ["GET", "POST"])
 def signin():
+    db = client["MasterClasses"]
     status = "signin"
     staff = db["staff"]
 
