@@ -119,7 +119,7 @@ def staffs():
 
     
 
-    return render_template("staff.html", documents = cursor )
+    return render_template("Staff.html", documents = cursor )
 
 @app.route("/deleteTask/<int:index>/<email>", methods = ["POST"])
 def delete_task(index, email):
