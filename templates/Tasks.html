@@ -1,0 +1,167 @@
+{% extends 'base.html' %}
+
+{% block style %}
+
+.ck2 {
+    --unchecked-color: #6c757d; /* Default color */
+    --checked-color: #28a745; /* Green color */
+    -webkit-appearance: none;
+    appearance: none;
+    border: 2px solid var(--unchecked-color);
+    border-radius: 4px;
+    width: 16px;
+    height: 16px;
+    outline: none;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  /* Set the color of the checkbox when it's checked */
+  .ck2:checked {
+    border-color: var(--checked-color);
+    background-color: var(--checked-color);
+  }
+  
+  /* Set the color of the tick mark */
+  .ck2:checked::after {
+    content: '';
+    display: block;
+    width: 5px;
+    height: 10px;
+    border: solid white;
+    border-width: 0 2px 2px 0;
+    transform: rotate(45deg) translate(4px, -4px);
+  }
+  .fa-beat, fa-trash{
+    display: inline-block;
+    border-radius: 50%;
+    border: 2px ;
+    padding: 10px;
+    background-color : black;
+    margin-left: 27rem;
+  }
+{% endblock %}
+{% block content %}
+<div>
+    <table class="table table-dark container table-responsive" style = "width: 80%; margin-top: 3rem;">
+
+        <thead>
+          <tr>
+            <th scope="col">#</th>
+            <th scope="col">Tasks Assigned</th>
+            <th>Completion Status</th>
+            
+          </tr>
+        </thead>
+        <tbody>
+        <form class = 'myForm' action = "" method = "POST">
+          <span style = "display : block;width : 50%; text-align: center;  margin: 2rem auto 0;" class = "display-6 p-1 text-bg-dark  rounded-3">{{staffName['name']}}</span>
+          <input id = "hiddenInput" type = "hidden" value = "{{staffName['email']}}">
+          {% if tasks %}
+          {% for task in tasks %}
+            <tr id ="row">
+              <th scope="row">{{loop.index}}.</th>
+              <td>
+                <div class = "input-group">
+                  {{task["taskName"]}}
+                </div>
+              </td>
+              <td style="text-align: center;"> 
+                <div class="input-group" >
+                  <div class="input-group-text" style="text-align: center;">
+                      <input class="form-check-input mt-0" type="checkbox" id ="{{loop.index0}}" onclick = "check(this);" {% if admin %} disabled  {% endif %} aria-label="Checkbox for following text input" {% if task.is_completed  %}checked{% endif %}>
+                    </div>
+                    <div class="input-group-text">
+                      <input class="ck2" type="checkbox" value="" id ="{{loop.index0}}" onclick = "verify(this);" {% if not admin %} disabled  {% endif %} aria-label="Checkbox for following text input" {% if task.is_verified %}checked{% endif %}>
+                    </div>
+                    {% if admin %}
+                    <div style = "margin-left : 1rem;"><i class="fa-solid fa-trash btn-success btn deleteButton" onclick = "deleteTask(this)" value = "{{staffName['email']}}" id = "{{loop.index0}}"></i></td></div>
+
+                    {% endif %}
+                </div>
+            </tr>
+          {% endfor %}
+          {% endif %}
+          {% if admin %}
+          <tr id = "row">
+            <th scope="row">#.</th>
+            <td ><div class="input-group">
+                <input  style = "width: 100%; height: 200%;" name = "task" type="text" value="" aria-label="Checkbox for following text input">
+            </div>
+              </td>
+            <td style="text-align: center;">
+              <div class="input-group" >
+                <div class="input-group-text" style="text-align: center;">
+                    <input class="form-check-input mt-0" type="checkbox"  value="" aria-label="Checkbox for following text input">
+                  </div>
+                  <div class="input-group-text">
+                    <input class="ck2" type="checkbox" aria-label="Checkbox for following text input">
+                  </div>
+                  
+                
+              </div></td>
+            
+          </tr>
+          {% endif %}
+          
+        </form>
+        </tbody>
+    
+      </table>
+      {% if admin %}
+      <i id = "addButton" class="fa-solid fa-plus fa-beat btn-info btn submitFormButton"  style = "color : white;"></i>
+
+      {% endif %}
+</div>
+
+{% include 'Footer.html'   %}
+<script src="https://code.jquery.com/jquery-3.6.4.js" integrity="sha256-a9jBBRygX1Bh5lt8GZjXDzyOB+bWve9EiO7tROUtj/E=" crossorigin="anonymous"></script>
+<script type = "text/javascript">
+  function verify(element) {
+    var email = $("#hiddenInput").attr("value");
+    var index = element.id;
+    
+    // console.log(index)
+
+    $(".myForm").attr("action", "/verify/"+index+"/"+email);
+    $(".myForm").submit();
+    // $("tbody").append(clonedDiv);
+  };
+function check(element) {
+    var email = $("#hiddenInput").attr("value");
+    var index = element.id;
+    
+    // console.log(index)
+
+    $(".myForm").attr("action", "/check/"+index+"/"+email);
+    $(".myForm").submit();
+    // $("tbody").append(clonedDiv);
+  };
+
+function deleteTask(element) {
+    var email = $("#hiddenInput").attr("value");
+    var index = element.id;
+    
+    // console.log(index)
+
+    $(".myForm").attr("action", "/deleteTask/"+index+"/"+email);
+    $(".myForm").submit();
+    // $("tbody").append(clonedDiv);
+  };
+  
+    $(document).ready(function() {
+    $("#addButton").click(function() {
+      var email = $("#hiddenInput").attr("value");
+      $(".myForm").attr("action", "/tasks/"+email+"/True");
+      $(".myForm").submit();
+      // $("tbody").append(clonedDiv);
+
+  })
+  
+  
+
+  
+});
+;
+  
+</script>
+{% endblock %}

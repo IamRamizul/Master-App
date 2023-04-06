@@ -1,0 +1,23 @@
+{% extends 'base.html' %}
+{% block title %}
+    Employees
+{% endblock %}
+{% block content %}
+<div class = "container" style = "width : 50% ; margin-top : 5rem; font-weight: 500;">
+    <div class="list-group">
+        <h3 class = 'p-2 mb-4 text-bg-dark text-center rounded-3'>List of Employees</h3>
+
+        {% for document in documents %}
+            <a href="tasks/{{document['email']}}/{{True}}" class="list-group-item list-group-item-action list-group-item-primary">{{ loop.index }}. {{document["name"]}}</a>
+
+        
+  
+        {% endfor %}
+
+      
+      </div>
+</div>
+
+
+{% include 'Footer.html'   %}
+{% endblock %}
