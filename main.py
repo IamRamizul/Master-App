@@ -16,7 +16,7 @@ class BoolConverter(BaseConverter):
         return str(value).lower()
 
 
-app = Flask(__name__)
+app=Flask(__name__,template_folder='templates')
 app.config['SECRET_KEY'] = 'my_key'
 app.config['TESTING'] = False
 app.url_map.converters['bool'] = BoolConverter
