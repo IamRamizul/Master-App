@@ -1,0 +1,17 @@
+{% extends 'base.html' %}
+{% block content %}
+
+<div class="jumbotron p-4 mb-4 text-bg-dark  rounded-3" style = "width : 80% ; margin-top : 3rem; margin-left : 2rem">
+    <h1 class="display-4">Welcome !</h1>
+    <p class="lead">Master Classes is a family focussed and Child centered Classes located in the heart of the City. Our students are surrounded by rich and meaningful learning experiences both inside and outside of the classroom premises.</p>
+    <hr class="my-4">
+    <p>Our mission is to develop the skills, thinking, processes and concepts while simultaneously fostering positive, spiritual and social growth , self-discipline, ethical and moral values.</p>
+    <a class="btn btn-success " href="{{url_for('login')}}" role="button">Log In</a>
+    <a class="btn btn-light " href="{{url_for('signin')}}" role="button">Sign In</a>
+    
+
+
+</div>
+
+{% include 'Footer.html'   %}
+{% endblock %}
