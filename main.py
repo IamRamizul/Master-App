@@ -58,9 +58,9 @@ def login():
 
 @app.route("/signin", methods = ["GET", "POST"])
 def signin():
-    db = client["MasterClasses"]
+    
     status = "signin"
-    staff = db["staff"]
+    
 
     if request.method  == "POST" : 
         name = request.form.get("name")
@@ -113,7 +113,7 @@ def logout():
 
 @app.route("/staff")
 def staffs():
-    staff = db["staff"]
+    
     
     cursor = staff.find()
 
